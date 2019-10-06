@@ -89,17 +89,17 @@ func appendingNets(netA, netB *net.IPNet) bool {
 	// This is the bit, which changes, when increasing the netmask:
 	// 		/24	= 11111111 11111111 11111111 00000000
 	// 		/23	= 11111111 11111111 11111110 00000000
-	// extraBit = 00000000 00000000 00000001 00000000
+	// 	       extraBit = 00000000 00000000 00000001 00000000
 	for i := 0; i < 4; i++ {
 		extraBit[i] = netA.Mask[i] & ^nextBiggerMask[i]
 	}
 
 	// Get the following appending expected network:
-	// 		192.168.0.0	= 11000000 10101000 00000000 00000000
+	// 		192.168.0.0 = 11000000 10101000 00000000 00000000
 	//			+
 	// 		   extraBit = 00000000 00000000 00000001 00000000
 	//			=
-	// 		192.168.1.0	= 11000000 10101000 00000001 00000000
+	// 		192.168.1.0 = 11000000 10101000 00000001 00000000
 	for i := 0; i < 4; i++ {
 		expectedNetB[i] = netA.IP[i] | extraBit[i]
 	}
